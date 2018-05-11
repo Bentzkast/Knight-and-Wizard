@@ -6,9 +6,9 @@ using UnityEngine;
 public class Damage {
 
 
-    public int raw_damage;
+    public int rawDamage;
 
     public Damage(int raw){
-        raw_damage = raw;
+        rawDamage = raw;
     }
 }

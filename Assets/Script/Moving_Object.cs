@@ -5,41 +5,41 @@ using UnityEngine;
 public abstract class Moving_Object : MonoBehaviour {
 
     public float move_time = .1f;
-    public LayerMask blocking_layer;
+	public LayerMask blockingLayer;
 
-    private BoxCollider2D box_collider;
-    private Rigidbody2D rigidbody_2d;
-    private float inverse_move_time;
-    protected bool moving = false;
+	private BoxCollider2D _boxCollider;
+	private Rigidbody2D _rigidbody2D;
+	private float _inverseMoveTime;
+    protected bool isMoving = false;
 
     protected virtual void Start()
     {
-        box_collider = GetComponent<BoxCollider2D>();
-        rigidbody_2d = GetComponent<Rigidbody2D>();
-        inverse_move_time = 1f / move_time;
+        _boxCollider = GetComponent<BoxCollider2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _inverseMoveTime = 1f / move_time;
     }
 
     protected IEnumerator SmoothMovement(Vector3 target_pos)
     {
-        moving = true;
+        isMoving = true;
         float sqr_remaining_distance = (transform.position - target_pos).sqrMagnitude;
         while(sqr_remaining_distance > float.Epsilon){
-            Vector3 new_position = Vector3.MoveTowards(transform.position, target_pos, inverse_move_time * Time.deltaTime);
-            rigidbody_2d.MovePosition(new_position);
+            Vector3 new_position = Vector3.MoveTowards(transform.position, target_pos, _inverseMoveTime * Time.deltaTime);
+            _rigidbody2D.MovePosition(new_position);
             sqr_remaining_distance = (transform.position - target_pos).sqrMagnitude;
 
             yield return null;
         }
-        moving = false;
+        isMoving = false;
     }
 
     protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
     {
         Vector2 start_position = transform.position;
         Vector2 target_position = start_position + new Vector2(xDir, yDir);
-        box_collider.enabled = false;
-        hit = Physics2D.Linecast(start_position, target_position, blocking_layer);
-        box_collider.enabled = true;
+        _boxCollider.enabled = false;
+        hit = Physics2D.Linecast(start_position, target_position, blockingLayer);
+        _boxCollider.enabled = true;
 
         if(hit.transform == null)
         {

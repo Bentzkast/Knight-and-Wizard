@@ -5,22 +5,22 @@ using UnityEngine;
 public class Enemy : Moving_Object {
 
     public int hp = 3;
-    public GameObject enemy_child_object;
-    public GameObject slash_sprite;
+	public GameObject enemyChildObject;
+	public GameObject slashSprite;
 
-    private SpriteRenderer spriteRenderer;
-    private Transform target;
-    private Animator animator;
+    //private SpriteRenderer spriteRenderer;
+	private Transform _target;
+	private Animator _animator;
 
 	private void Awake()
 	{
-        spriteRenderer = enemy_child_object.GetComponent<SpriteRenderer>();
-        animator = enemy_child_object.GetComponent<Animator>();
+        //spriteRenderer = enemy_child_object.GetComponent<SpriteRenderer>();
+        _animator = enemyChildObject.GetComponent<Animator>();
 	}
     protected override void Start()
     {
-        GameManager.gm_instance.AddEnemyToList(this);
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        GameManager.instanceGM.AddEnemyToList(this);
+        _target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
     }
 
@@ -30,15 +30,15 @@ public class Enemy : Moving_Object {
 	}
 
 	public void DamageEnemy(Damage damage){
-        GameObject slash_instance = Instantiate(slash_sprite, gameObject.transform.position, Quaternion.identity);
+        GameObject slash_instance = Instantiate(slashSprite, gameObject.transform.position, Quaternion.identity);
         Destroy(slash_instance, .1f);
-        hp -= damage.raw_damage;
-        animator.SetTrigger("Enemy_hit");
+        hp -= damage.rawDamage;
+        _animator.SetTrigger("Enemy_hit");
 
         if (hp <= 0)
         {
             gameObject.SetActive(false);
-            GameManager.gm_instance.RemoveEnemyFromList(this);
+            GameManager.instanceGM.RemoveEnemyFromList(this);
         }
             
     }
@@ -46,10 +46,10 @@ public class Enemy : Moving_Object {
     public void MoveEnemy(){
         int xDir = 0;
         int yDir = 0;
-        if (Mathf.Abs(target.position.x - transform.position.x) > float.Epsilon)
-            yDir = target.position.x > transform.position.x ? 1 : -1;
+        if (Mathf.Abs(_target.position.x - transform.position.x) > float.Epsilon)
+            xDir = _target.position.x > transform.position.x ? 1 : -1;
         else
-            xDir = target.position.y > transform.position.y ? 1 : -1;
+            yDir = _target.position.y > transform.position.y ? 1 : -1;
         AttemptMove<Player>(xDir, yDir);
     }
 
@@ -57,6 +57,6 @@ public class Enemy : Moving_Object {
 	{
         Player hit_player = component as Player;
         hit_player.TakeDamage(new Damage(1));
-        animator.SetTrigger("Enemy_attack");
+        _animator.SetTrigger("Enemy_attack");
 	}
 }

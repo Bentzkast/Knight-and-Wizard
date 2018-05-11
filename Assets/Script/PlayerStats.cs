@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats {
 
-    public int move = 2;
-    public int hp = 2;
-    public int armor = 1;
+    public int movementValue = 2;
+    public int hitPoints = 2;
+	public int blockValue = 1;
 }

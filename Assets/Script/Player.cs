@@ -5,30 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class Player : Moving_Object {
 
-    public Animator knight_animator;
-    public GameObject weapon_slot;
-    public float restart_lvl_delay = 1f;
+    public Animator knightAnimator;
+	public GameObject weaponSlot;
+	public float restartLvlDelay = 1f;
 
-    private Animator weapon_animator;
-    private PlayerStats player_stats;
-    private SpriteRenderer weapon_sprite_renderer;
+	private Animator _weaponAnimator;
+	private PlayerStats _playerStats;
+	private SpriteRenderer _weaponSpriteRenderer;
 
 	protected override void Start()
 	{
-        weapon_animator = weapon_slot.GetComponent<Animator>();
-        weapon_sprite_renderer = weapon_slot.GetComponent<SpriteRenderer>();
-        player_stats = GameManager.gm_instance.player_stats;
+        _weaponAnimator = weaponSlot.GetComponent<Animator>();
+        _weaponSpriteRenderer = weaponSlot.GetComponent<SpriteRenderer>();
+        _playerStats = GameManager.instanceGM.playerStats;
 		base.Start();
 	}
 
 	private void OnDisable()
 	{
-        GameManager.gm_instance.player_stats = player_stats;
+        GameManager.instanceGM.playerStats = _playerStats;
 	}
 
     private void CheckIfGameOver()
     {
-        if(player_stats.hp <= 0)
+        if(_playerStats.hitPoints <= 0)
         {
             Debug.Log("Game Over");
         }
@@ -41,15 +41,15 @@ public class Player : Moving_Object {
 
     public void TakeDamage(Damage damage)
     {
-        knight_animator.SetTrigger("Knight_hit");
-        player_stats.hp -= damage.raw_damage;
+        knightAnimator.SetTrigger("Knight_hit");
+        _playerStats.hitPoints -= damage.rawDamage;
         CheckIfGameOver();
     }
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
         if(other.tag == "exit"){
-            Invoke("Restart", restart_lvl_delay);
+            Invoke("Restart", restartLvlDelay);
             enabled = false;
         }
         if(other.tag == "potion"){
@@ -62,25 +62,25 @@ public class Player : Moving_Object {
 	{
         Enemy hitEnemy = component as Enemy;
         hitEnemy.DamageEnemy(new Damage(1));
-        knight_animator.SetTrigger("Knight_attack");
-        weapon_animator.SetTrigger("Weapon_attack");
+        knightAnimator.SetTrigger("Knight_attack");
+        _weaponAnimator.SetTrigger("Weapon_attack");
 	}
 
 	protected override void AttemptMove<T>(int xDir, int yDir)
 	{
-        player_stats.move--;
+        _playerStats.movementValue--;
         base.AttemptMove<T>(xDir, yDir);
-        Debug.Log(player_stats.move.ToString());
-        if (player_stats.move <= 0){
-            GameManager.gm_instance.player_turn = false;
-            player_stats.move = 2;
+        Debug.Log(_playerStats.movementValue.ToString());
+        if (_playerStats.movementValue <= 0){
+            GameManager.instanceGM.isPlayerTurn = false;
+            _playerStats.movementValue = 2;
         }
 	}
 
 	private void Update()
 	{
-        if (!GameManager.gm_instance.player_turn) return;
-        if (moving) return;
+        if (!GameManager.instanceGM.isPlayerTurn) return;
+        if (isMoving) return;
 
         int horizontal = 0;
         int vertical = 0;

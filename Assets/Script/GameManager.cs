@@ -4,46 +4,46 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public static GameManager gm_instance = null;
-    public float level_start_delay = 0.1f;
-    public float turn_delay = 0.5f;
-    public PlayerStats player_stats;
+    public static GameManager instanceGM = null;
+	public float levelStartDelay = 0.1f;
+	public float turnDelay = 0.5f;
+    public PlayerStats playerStats;
 
-    private BoardManager board_script;
-    private List<Enemy> enemies;
-    private bool enemies_moving;
-    [HideInInspector]public bool player_turn = true;
+	private BoardManager _boardScript;
+	private List<Enemy> enemiesList;
+	private bool enemiesIsMoving;
+    [HideInInspector]public bool isPlayerTurn = true;
 
 	private void Awake()
 	{
-        if(gm_instance == null){
-            gm_instance = this;
+        if(instanceGM == null){
+            instanceGM = this;
         }
-        else if(gm_instance != null){
+        else if(instanceGM != null){
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        enemies = new List<Enemy>();
-        board_script = GetComponent<BoardManager>();
+        enemiesList = new List<Enemy>();
+        _boardScript = GetComponent<BoardManager>();
         InitGame();
 	}
 
 
 	private void InitGame(){
-        enemies.Clear();
-        board_script.SetupGameBoard();
+        enemiesList.Clear();
+        _boardScript.SetupGameBoard();
     }
 	private void Update()
 	{
-        if (player_turn || enemies_moving) return;
+        if (isPlayerTurn || enemiesIsMoving) return;
         StartCoroutine(MoveEnemies());
 	}
     public void AddEnemyToList(Enemy script)
     {
-        enemies.Add(script);
+        enemiesList.Add(script);
     }
     public void RemoveEnemyFromList(Enemy script){
-        enemies.Remove(script);
+        enemiesList.Remove(script);
     }
 
     public void GameOver()
@@ -52,18 +52,18 @@ public class GameManager : MonoBehaviour {
     }
     IEnumerator MoveEnemies()
     {
-        enemies_moving = true;
-        yield return new WaitForSeconds(turn_delay);
-        if(enemies.Count == 0){
-            yield return new WaitForSeconds(turn_delay);
+        enemiesIsMoving = true;
+        yield return new WaitForSeconds(turnDelay);
+        if(enemiesList.Count == 0){
+            yield return new WaitForSeconds(turnDelay);
         }
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemiesList.Count; i++)
         {
-            enemies[i].MoveEnemy();
-            yield return new WaitForSeconds(enemies[i].move_time);
+            enemiesList[i].MoveEnemy();
+            yield return new WaitForSeconds(enemiesList[i].move_time);
         }
 
-        player_turn = true;
-        enemies_moving = false;
+        isPlayerTurn = true;
+        enemiesIsMoving = false;
     }
 }

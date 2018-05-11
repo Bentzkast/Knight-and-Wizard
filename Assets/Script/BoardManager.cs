@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour {
 
-    public GameObject[] top_wall_tiles;
-    public GameObject[] side_wall_tiles;
-    public GameObject[] floor_top_tiles;
-    public GameObject[] floor_side_tiles;
-    public GameObject[] floor_tiles;
-    public int board_col = 8;
-    public int board_row = 8;
+	public GameObject[] topWallTiles;
+	public GameObject[] sideWallTiles;
+	public GameObject[] floorTopTiles;
+	public GameObject[] floorSideTiles;
+	public GameObject[] floorTiles;
+    public int boardCol = 8;
+	public int boardRow = 8;
 
     private Transform board_holder;
     private List<Vector3> grid_positions = new List<Vector3>();
@@ -19,9 +19,9 @@ public class BoardManager : MonoBehaviour {
     // Create play area
     void InitializeList(){
         grid_positions.Clear();
-        for (int i = 1; i < board_col - 1; i++)
+        for (int i = 1; i < boardCol - 1; i++)
         {
-            for (int j = 1; j < board_row - 1; j++)
+            for (int j = 1; j < boardRow - 1; j++)
             {
                 grid_positions.Add(new Vector3(i, j, 0f));
             }
@@ -29,7 +29,7 @@ public class BoardManager : MonoBehaviour {
     }
 
     // get random available position
-    Vector3 randomPosition()
+	private Vector3 RandomPosition()
     {
         int random_index = Random.Range(0, grid_positions.Count);
 
@@ -41,13 +41,13 @@ public class BoardManager : MonoBehaviour {
     }
 
     // set specified object at random
-    void layoutObjectAtRandom(GameObject[] object_tile_array, int min, int max)
+	void LayoutObjectAtRandom(GameObject[] object_tile_array, int min, int max)
     {
         int object_count = Random.Range(min, max);
 
         for (int i = 0; i < object_count; i++)
         {
-            Vector3 random_position = randomPosition();
+            Vector3 random_position = RandomPosition();
             GameObject tile_to_instantiate = object_tile_array[Random.Range(0, object_tile_array.Length)];
 
             GameObject tile_instance = Instantiate(tile_to_instantiate, random_position, Quaternion.identity);
@@ -57,23 +57,23 @@ public class BoardManager : MonoBehaviour {
     void BoardSetup(){
         board_holder = new GameObject("Board").transform;
 
-        for (int i = -1; i < board_col + 1; i++)
+        for (int i = -1; i < boardCol + 1; i++)
         {
-            for (int j = -1; j < board_row + 1; j++)
+            for (int j = -1; j < boardRow + 1; j++)
             {
-                GameObject tile_to_instantiate = floor_tiles[Random.Range(0, floor_tiles.Length)];
+                GameObject tile_to_instantiate = floorTiles[Random.Range(0, floorTiles.Length)];
 
-                if (i == board_col || i == -1 || j == -1)
+                if (i == boardCol || i == -1 || j == -1)
                 {
-                    tile_to_instantiate = side_wall_tiles[Random.Range(0, side_wall_tiles.Length)];
+                    tile_to_instantiate = sideWallTiles[Random.Range(0, sideWallTiles.Length)];
                 }
-                else if (j == board_row)
+                else if (j == boardRow)
                 {
-                    tile_to_instantiate = top_wall_tiles[Random.Range(0, top_wall_tiles.Length)];
+                    tile_to_instantiate = topWallTiles[Random.Range(0, topWallTiles.Length)];
                 }
-                else if( j == board_row -1)
+                else if( j == boardRow -1)
                 {
-                    tile_to_instantiate = floor_top_tiles[Random.Range(0, floor_top_tiles.Length)];
+                    tile_to_instantiate = floorTopTiles[Random.Range(0, floorTopTiles.Length)];
                 }
 
 
