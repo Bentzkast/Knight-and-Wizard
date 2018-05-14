@@ -5,11 +5,27 @@ using Random = UnityEngine.Random;
 
 public class BoardManager : MonoBehaviour {
 
+
+	public class ValueRange
+	{
+		public int min;
+		public int max;
+		public ValueRange(int min, int max)
+		{
+			this.min = min;
+			this.max = max;
+		}
+	}
+
 	public GameObject[] topWallTiles;
 	public GameObject[] sideWallTiles;
 	public GameObject[] floorTopTiles;
 	public GameObject[] floorSideTiles;
 	public GameObject[] floorTiles;
+	public GameObject[] boxItem;
+	public GameObject[] pickUpItem;
+	public ValueRange boxAmount;
+	public ValueRange pickUpAmount;
     public int boardCol = 8;
 	public int boardRow = 8;
 
@@ -85,5 +101,11 @@ public class BoardManager : MonoBehaviour {
     public void SetupGameBoard(){
         BoardSetup();
         InitializeList();
+		boxAmount = new ValueRange(2,4);
+		pickUpAmount = new ValueRange(1, 2);
+
+		LayoutObjectAtRandom(boxItem, boxAmount.min, boxAmount.max);
+		LayoutObjectAtRandom(pickUpItem, pickUpAmount.min, pickUpAmount.max);
+
     }
 }

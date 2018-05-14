@@ -6,7 +6,11 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats {
 
+	public int maxSlot = 2;
     public int movementValue = 2;
     public int hitPoints = 2;
-	public int blockValue = 1;
+	public int defaultAttack = 1;
+	public Equipment weaponSlot;
+	public Equipment armorSlot;
+	public Equipment otherSlot;
 }

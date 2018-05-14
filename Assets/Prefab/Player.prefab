@@ -147,7 +147,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
 --- !u!95 &95745523669923746
 Animator:
@@ -197,10 +197,12 @@ MonoBehaviour:
   move_time: 0.1
   blockingLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   knightAnimator: {fileID: 95922292053855824}
   weaponSlot: {fileID: 1932628118125676}
   restartLvlDelay: 1
+  defaultWeaponSprite: {fileID: 21300004, guid: 2513292b237c34abb9f0e5b6e8fe4263,
+    type: 3}
 --- !u!212 &212032748618234612
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -237,7 +239,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300004, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1.25}

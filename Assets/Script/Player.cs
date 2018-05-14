@@ -8,6 +8,7 @@ public class Player : Moving_Object {
     public Animator knightAnimator;
 	public GameObject weaponSlot;
 	public float restartLvlDelay = 1f;
+	public Sprite defaultWeaponSprite;
 
 	private Animator _weaponAnimator;
 	private PlayerStats _playerStats;
@@ -52,16 +53,33 @@ public class Player : Moving_Object {
             Invoke("Restart", restartLvlDelay);
             enabled = false;
         }
-        if(other.tag == "potion"){
-            Debug.Log("Picked up potion");
+        else if(other.tag == "Equipment"){
+            Debug.Log("Picked up Equipment");
+			Equipment equipment = other.GetComponent<PickUp>().GetPickUpEquipment();
+			if (equipment.equipmentType == Equipment.Type.Weapon){
+				_playerStats.weaponSlot = equipment;
+				_weaponSpriteRenderer.sprite = equipment.icon;
+			}
+				
+			else if (equipment.equipmentType == Equipment.Type.Armor)
+				_playerStats.armorSlot = equipment;
+			else if (equipment.equipmentType == Equipment.Type.Other)
+				_playerStats.otherSlot = equipment;
+            
+			other.gameObject.SetActive(false);
+            
         }
-
+       
 	}
 
 	protected override void OnCantMove<T>(T component)
 	{
         Enemy hitEnemy = component as Enemy;
-        hitEnemy.DamageEnemy(new Damage(1));
+        // ensure combat
+
+		Damage counter= hitEnemy.DamageEnemy(new Damage(_playerStats.weaponSlot.attackValue,0));
+		_playerStats.weaponSlot.durabilty -= counter.duraDamage;
+
         knightAnimator.SetTrigger("Knight_attack");
         _weaponAnimator.SetTrigger("Weapon_attack");
 	}
@@ -70,7 +88,6 @@ public class Player : Moving_Object {
 	{
         _playerStats.movementValue--;
         base.AttemptMove<T>(xDir, yDir);
-        Debug.Log(_playerStats.movementValue.ToString());
         if (_playerStats.movementValue <= 0){
             GameManager.instanceGM.isPlayerTurn = false;
             _playerStats.movementValue = 2;
@@ -79,6 +96,9 @@ public class Player : Moving_Object {
 
 	private void Update()
 	{
+		if(_playerStats.weaponSlot != null && _playerStats.weaponSlot.durabilty == 0){
+			_weaponSpriteRenderer.sprite = defaultWeaponSprite;
+		}
         if (!GameManager.instanceGM.isPlayerTurn) return;
         if (isMoving) return;
 

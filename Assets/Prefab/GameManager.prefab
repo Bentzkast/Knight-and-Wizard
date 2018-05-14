@@ -52,21 +52,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7b846dc4a0e4ba68999f6ac8a6a52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  top_wall_tiles:
+  topWallTiles:
   - {fileID: 1328131440344452, guid: d8fc4faeb3eba4160a6479cb1ad29b4f, type: 2}
   - {fileID: 1859049076890336, guid: 1d3b82bb74f3a46a38d03edcd2e870be, type: 2}
   - {fileID: 1697399557875462, guid: 1b23939ac345b496a93bca6b9f21745a, type: 2}
-  side_wall_tiles:
+  sideWallTiles:
   - {fileID: 1878395205284938, guid: 37b20f49eab3a4596a301431ebc1ac57, type: 2}
-  floor_top_tiles:
+  floorTopTiles:
   - {fileID: 1372495786022240, guid: 5e330efe5641945eeb996e6b7f7dc7eb, type: 2}
   - {fileID: 1854364330075398, guid: 19c024a07b89944d1a3cd16092050697, type: 2}
   - {fileID: 1659894942386330, guid: af3f0ee8f2d7d4aeb9f3959d791eed2e, type: 2}
-  floor_side_tiles: []
-  floor_tiles:
+  floorSideTiles:
   - {fileID: 1137893616467632, guid: f0866d3a96f1c42ba856e672feacf29f, type: 2}
-  board_col: 10
-  board_row: 6
+  floorTiles:
+  - {fileID: 1137893616467632, guid: f0866d3a96f1c42ba856e672feacf29f, type: 2}
+  boxItem:
+  - {fileID: 1923470810141416, guid: c915e1301a95f4f46b2d31ee7db00838, type: 2}
+  boardCol: 8
+  boardRow: 8
 --- !u!114 &114491984538595026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,10 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16186753ac50a4c9e938230f372d31eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level_start_delay: 0.1
-  turn_delay: 0.5
-  player_stats:
-    move: 2
-    hp: 2
-    armor: 1
-  player_turn: 1
+  levelStartDelay: 0.1
+  turnDelay: 0.5
+  playerStats:
+    movementValue: 2
+    hitPoints: 2
+    blockValue: 1
+  isPlayerTurn: 1

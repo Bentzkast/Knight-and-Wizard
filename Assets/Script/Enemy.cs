@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : Moving_Object {
 
     public int hp = 3;
+	public int attack = 1;
+	public int armor = 1;
 	public GameObject enemyChildObject;
 	public GameObject slashSprite;
 
@@ -29,7 +31,7 @@ public class Enemy : Moving_Object {
         base.AttemptMove<T>(xDir, yDir);
 	}
 
-	public void DamageEnemy(Damage damage){
+	public Damage DamageEnemy(Damage damage){
         GameObject slash_instance = Instantiate(slashSprite, gameObject.transform.position, Quaternion.identity);
         Destroy(slash_instance, .1f);
         hp -= damage.rawDamage;
@@ -40,7 +42,8 @@ public class Enemy : Moving_Object {
             gameObject.SetActive(false);
             GameManager.instanceGM.RemoveEnemyFromList(this);
         }
-            
+
+		return new Damage(attack, armor);
     }
 
     public void MoveEnemy(){
@@ -56,7 +59,7 @@ public class Enemy : Moving_Object {
 	protected override void OnCantMove<T>(T component)
 	{
         Player hit_player = component as Player;
-        hit_player.TakeDamage(new Damage(1));
+		hit_player.TakeDamage(new Damage(attack,0));
         _animator.SetTrigger("Enemy_attack");
 	}
 }
