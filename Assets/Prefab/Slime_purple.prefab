@@ -150,7 +150,9 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  hp: 3
+  hp: 5
+  attack: 1
+  armor: 1
   enemyChildObject: {fileID: 1291478689723672}
   slashSprite: {fileID: 1478817130071248, guid: 170cf85b208f1440d8909a0b9d151cd6,
     type: 2}

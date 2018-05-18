@@ -13,10 +13,12 @@ public class Player : Moving_Object {
 	private Animator _weaponAnimator;
 	private PlayerStats _playerStats;
 	private SpriteRenderer _weaponSpriteRenderer;
+	private bool m_isAxisInUse = false;
 
+       
 	protected override void Start()
 	{
-        _weaponAnimator = weaponSlot.GetComponent<Animator>();
+		_weaponAnimator = weaponSlot.GetComponent<Animator>();
         _weaponSpriteRenderer = weaponSlot.GetComponent<SpriteRenderer>();
         _playerStats = GameManager.instanceGM.playerStats;
 		base.Start();
@@ -43,7 +45,7 @@ public class Player : Moving_Object {
     public void TakeDamage(Damage damage)
     {
         knightAnimator.SetTrigger("Knight_hit");
-        _playerStats.hitPoints -= damage.rawDamage;
+		_playerStats.hitPoints -= damage.rawDamage - _playerStats.GetBlockValue();
         CheckIfGameOver();
     }
 
@@ -75,13 +77,18 @@ public class Player : Moving_Object {
 	protected override void OnCantMove<T>(T component)
 	{
         Enemy hitEnemy = component as Enemy;
+
+		//Debug.Log(hitEnemy.gameObject.name);
         // ensure combat
 
-		Damage counter= hitEnemy.DamageEnemy(new Damage(_playerStats.weaponSlot.attackValue,0));
-		_playerStats.weaponSlot.durabilty -= counter.duraDamage;
+		Damage counter = hitEnemy.DamageEnemy(new Damage(_playerStats.weaponSlot ? _playerStats.weaponSlot.attackValue : _playerStats.defaultAttack,0));
+		if(_playerStats.weaponSlot != null)
+		    _playerStats.weaponSlot.durabilty -= counter.duraDamage;
+		TakeDamage(counter);
 
         knightAnimator.SetTrigger("Knight_attack");
         _weaponAnimator.SetTrigger("Weapon_attack");
+		isMoving = false;
 	}
 
 	protected override void AttemptMove<T>(int xDir, int yDir)
@@ -90,8 +97,9 @@ public class Player : Moving_Object {
         base.AttemptMove<T>(xDir, yDir);
         if (_playerStats.movementValue <= 0){
             GameManager.instanceGM.isPlayerTurn = false;
-            _playerStats.movementValue = 2;
+			_playerStats.movementValue = _playerStats.maxMovement;
         }
+
 	}
 
 	private void Update()
@@ -108,10 +116,19 @@ public class Player : Moving_Object {
         vertical = (int)(Input.GetAxisRaw("Vertical"));
 
         if (horizontal != 0) vertical = 0;
-        if (horizontal != 0 || vertical != 0)
+		if ((horizontal != 0 || vertical != 0) && m_isAxisInUse == false)
         {
-            Debug.Log("Attempt move");
+			isMoving = true;
+			m_isAxisInUse = true;
+			Debug.Log("Attempt move" + isMoving);
             AttemptMove<Enemy>(horizontal, vertical);
         }
+		if(vertical == 0 && horizontal == 0){
+			m_isAxisInUse = false;
+		}
+	}
+
+	public PlayerStats GetStats(){
+		return _playerStats;
 	}
 }

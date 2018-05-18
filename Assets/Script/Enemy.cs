@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Moving_Object {
 
@@ -9,6 +10,7 @@ public class Enemy : Moving_Object {
 	public int armor = 1;
 	public GameObject enemyChildObject;
 	public GameObject slashSprite;
+	public Text status;
 
     //private SpriteRenderer spriteRenderer;
 	private Transform _target;
@@ -32,6 +34,7 @@ public class Enemy : Moving_Object {
 	}
 
 	public Damage DamageEnemy(Damage damage){
+		Debug.Log("attack!");
         GameObject slash_instance = Instantiate(slashSprite, gameObject.transform.position, Quaternion.identity);
         Destroy(slash_instance, .1f);
         hp -= damage.rawDamage;
@@ -61,5 +64,10 @@ public class Enemy : Moving_Object {
         Player hit_player = component as Player;
 		hit_player.TakeDamage(new Damage(attack,0));
         _animator.SetTrigger("Enemy_attack");
+	}
+
+	private void Update()
+	{
+		status.text = "Hp:" + hp + "Attack:" + attack + "Armor:" + armor;
 	}
 }

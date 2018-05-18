@@ -7,6 +7,8 @@ TagManager:
   - Fire
   - Enemy
   - Box
+  - Equipment
+  - Consumable
   layers:
   - Default
   - TransparentFX
@@ -55,4 +57,7 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 3058400843
+    locked: 0
+  - name: WorldSpaceUI
+    uniqueID: 968071991
     locked: 0

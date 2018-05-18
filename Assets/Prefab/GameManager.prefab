@@ -68,6 +68,8 @@ MonoBehaviour:
   - {fileID: 1137893616467632, guid: f0866d3a96f1c42ba856e672feacf29f, type: 2}
   boxItem:
   - {fileID: 1923470810141416, guid: c915e1301a95f4f46b2d31ee7db00838, type: 2}
+  pickUpItem:
+  - {fileID: 1823937179354520, guid: 110d27689daa347c9bcfe72918cb4dbb, type: 2}
   boardCol: 8
   boardRow: 8
 --- !u!114 &114491984538595026
@@ -84,7 +86,12 @@ MonoBehaviour:
   levelStartDelay: 0.1
   turnDelay: 0.5
   playerStats:
+    maxMovement: 2
+    maxSlot: 2
     movementValue: 2
-    hitPoints: 2
-    blockValue: 1
+    hitPoints: 10
+    defaultAttack: 1
+    weaponSlot: {fileID: 0}
+    armorSlot: {fileID: 0}
+    otherSlot: {fileID: 0}
   isPlayerTurn: 1

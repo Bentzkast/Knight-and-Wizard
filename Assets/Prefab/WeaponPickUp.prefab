@@ -128,8 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300080, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   blockValue: 1
-  attackValue: 1
-  durabilty: 1
+  attackValue: 3
+  durabilty: 2
   tier: 1
   equipmentType: 0
 --- !u!114 &114773610208052306
