@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public float levelStartDelay = 0.1f;
 	public float turnDelay = 0.5f;
     public PlayerStats playerStats;
+	public bool gameIsOver;
 
 	private BoardManager _boardScript;
 	private List<Enemy> enemiesList;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour {
         enemiesList = new List<Enemy>();
         _boardScript = GetComponent<BoardManager>();
         InitGame();
+		gameIsOver = false;
 	}
 
 
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour {
     public void GameOver()
     {
         enabled = false;
+		gameIsOver = true;
     }
     IEnumerator MoveEnemies()
     {

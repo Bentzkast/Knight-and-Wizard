@@ -34,6 +34,8 @@ public class Player : Moving_Object {
         if(_playerStats.hitPoints <= 0)
         {
             Debug.Log("Game Over");
+			gameObject.SetActive(false);
+			GameManager.instanceGM.GameOver();
         }
     }
 
@@ -87,8 +89,7 @@ public class Player : Moving_Object {
 		TakeDamage(counter);
 
         knightAnimator.SetTrigger("Knight_attack");
-        _weaponAnimator.SetTrigger("Weapon_attack");
-		isMoving = false;
+		_weaponAnimator.SetTrigger("Weapon_attack");
 	}
 
 	protected override void AttemptMove<T>(int xDir, int yDir)
@@ -106,8 +107,10 @@ public class Player : Moving_Object {
 	{
 		if(_playerStats.weaponSlot != null && _playerStats.weaponSlot.durabilty == 0){
 			_weaponSpriteRenderer.sprite = defaultWeaponSprite;
+			_playerStats.weaponSlot = null;
 		}
         if (!GameManager.instanceGM.isPlayerTurn) return;
+		Debug.Log(isMoving);
         if (isMoving) return;
 
         int horizontal = 0;
@@ -120,7 +123,7 @@ public class Player : Moving_Object {
         {
 			isMoving = true;
 			m_isAxisInUse = true;
-			Debug.Log("Attempt move" + isMoving);
+			//Debug.Log("Attempt move" + isMoving);
             AttemptMove<Enemy>(horizontal, vertical);
         }
 		if(vertical == 0 && horizontal == 0){
