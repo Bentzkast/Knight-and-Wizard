@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114285911099859798}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,8 +70,10 @@ MonoBehaviour:
   - {fileID: 1923470810141416, guid: c915e1301a95f4f46b2d31ee7db00838, type: 2}
   pickUpItem:
   - {fileID: 1823937179354520, guid: 110d27689daa347c9bcfe72918cb4dbb, type: 2}
-  boardCol: 8
-  boardRow: 8
+  enemy:
+  - {fileID: 1943851369727640, guid: 0788c70d4f8784f529c9363eaa492cf9, type: 2}
+  boardCol: 16
+  boardRow: 16
 --- !u!114 &114491984538595026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,4 +96,5 @@ MonoBehaviour:
     weaponSlot: {fileID: 0}
     armorSlot: {fileID: 0}
     otherSlot: {fileID: 0}
+  gameIsOver: 0
   isPlayerTurn: 1

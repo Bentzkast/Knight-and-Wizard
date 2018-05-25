@@ -24,8 +24,10 @@ public class BoardManager : MonoBehaviour {
 	public GameObject[] floorTiles;
 	public GameObject[] boxItem;
 	public GameObject[] pickUpItem;
+	public GameObject[] enemy;
 	public ValueRange boxAmount;
 	public ValueRange pickUpAmount;
+	public ValueRange enemyAmount;
     public int boardCol = 8;
 	public int boardRow = 8;
 
@@ -101,11 +103,13 @@ public class BoardManager : MonoBehaviour {
     public void SetupGameBoard(){
         BoardSetup();
         InitializeList();
-		boxAmount = new ValueRange(2,4);
-		pickUpAmount = new ValueRange(1, 2);
+		boxAmount = new ValueRange(4,6);
+		pickUpAmount = new ValueRange(2, 4);
+		enemyAmount = new ValueRange(4, 5);
 
 		LayoutObjectAtRandom(boxItem, boxAmount.min, boxAmount.max);
 		LayoutObjectAtRandom(pickUpItem, pickUpAmount.min, pickUpAmount.max);
+		LayoutObjectAtRandom(enemy, enemyAmount.min, enemyAmount.max);
 
     }
 }

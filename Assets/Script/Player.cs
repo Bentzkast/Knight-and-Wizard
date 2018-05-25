@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : Moving_Object {
+public class Player : Moving_Object,IDamageable {
 
     public Animator knightAnimator;
 	public GameObject weaponSlot;
@@ -44,11 +44,17 @@ public class Player : Moving_Object {
         SceneManager.LoadScene(0);
     }
 
-    public void TakeDamage(Damage damage)
+	public Damage TakeDamage(Damage damage)
     {
-        knightAnimator.SetTrigger("Knight_hit");
-		_playerStats.hitPoints -= damage.rawDamage - _playerStats.GetBlockValue();
-        CheckIfGameOver();
+        
+		int finalDamage = damage.rawDamage - _playerStats.GetBlockValue();
+		if(finalDamage > 0)
+		{
+			_playerStats.hitPoints -= finalDamage;
+			knightAnimator.SetTrigger("Knight_hit");
+			CheckIfGameOver();
+		}      
+		return null;
     }
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -78,18 +84,19 @@ public class Player : Moving_Object {
 
 	protected override void OnCantMove<T>(T component)
 	{
-        Enemy hitEnemy = component as Enemy;
+		IDamageable hitEnemy = component as IDamageable;
 
 		//Debug.Log(hitEnemy.gameObject.name);
         // ensure combat
 
-		Damage counter = hitEnemy.DamageEnemy(new Damage(_playerStats.weaponSlot ? _playerStats.weaponSlot.attackValue : _playerStats.defaultAttack,0));
+		Damage counter = hitEnemy.TakeDamage(new Damage(_playerStats.weaponSlot ? _playerStats.weaponSlot.attackValue : _playerStats.defaultAttack,0));
 		if(_playerStats.weaponSlot != null)
 		    _playerStats.weaponSlot.durabilty -= counter.duraDamage;
-		TakeDamage(counter);
+
 
         knightAnimator.SetTrigger("Knight_attack");
 		_weaponAnimator.SetTrigger("Weapon_attack");
+		TakeDamage(counter);
 	}
 
 	protected override void AttemptMove<T>(int xDir, int yDir)
@@ -110,7 +117,6 @@ public class Player : Moving_Object {
 			_playerStats.weaponSlot = null;
 		}
         if (!GameManager.instanceGM.isPlayerTurn) return;
-		Debug.Log(isMoving);
         if (isMoving) return;
 
         int horizontal = 0;
@@ -124,7 +130,7 @@ public class Player : Moving_Object {
 			isMoving = true;
 			m_isAxisInUse = true;
 			//Debug.Log("Attempt move" + isMoving);
-            AttemptMove<Enemy>(horizontal, vertical);
+			AttemptMove<IDamageable>(horizontal, vertical);
         }
 		if(vertical == 0 && horizontal == 0){
 			m_isAxisInUse = false;

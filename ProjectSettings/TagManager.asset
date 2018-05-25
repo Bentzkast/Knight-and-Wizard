@@ -9,6 +9,7 @@ TagManager:
   - Box
   - Equipment
   - Consumable
+  - GameManager
   layers:
   - Default
   - TransparentFX

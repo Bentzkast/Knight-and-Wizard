@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4070165165020518}
   - component: {fileID: 212898019732077590}
+  - component: {fileID: 95798605682612084}
   m_Layer: 0
   m_Name: BoxGraphic
   m_TagString: Untagged
@@ -36,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4389974058134726}
   - component: {fileID: 61641115739763826}
+  - component: {fileID: 114561873321508658}
   m_Layer: 8
   m_Name: Box
   m_TagString: Box
@@ -95,6 +97,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &95798605682612084
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098439543364098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29e264c97f1714c52ba033126cbb8948, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114561873321508658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1923470810141416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde22176be4ef42efb369cc8100917b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack: 0
+  hp: 3
+  armor: 0
+  graphicAnimator: {fileID: 95798605682612084}
 --- !u!212 &212898019732077590
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -126,8 +160,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1042235613
-  m_SortingLayer: 3
+  m_SortingLayerID: -1791517859
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300068, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

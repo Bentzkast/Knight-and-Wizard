@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : Moving_Object {
+public class Enemy : Moving_Object, IDamageable {
 
     public int hp = 3;
 	public int attack = 1;
@@ -32,9 +32,8 @@ public class Enemy : Moving_Object {
 	{
         base.AttemptMove<T>(xDir, yDir);
 	}
-
-	public Damage DamageEnemy(Damage damage){
-		Debug.Log("attack!");
+    
+	public Damage TakeDamage(Damage damage){
         GameObject slash_instance = Instantiate(slashSprite, gameObject.transform.position, Quaternion.identity);
         Destroy(slash_instance, .1f);
         hp -= damage.rawDamage;

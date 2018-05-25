@@ -27,6 +27,11 @@ public class PlayerStats {
 		if (weaponSlot != null) block += weaponSlot.blockValue;
 		if (armorSlot != null) block += armorSlot.blockValue;
 		if (otherSlot != null) block += otherSlot.blockValue;
+		//if(block > 0)
+		//{
+		//	DealBlockDuraDamage(1);
+		//}
+
 		return block;
 	}
 
