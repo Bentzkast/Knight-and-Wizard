@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     public PlayerStats playerStats;
 	public bool gameIsOver;
 
-	private BoardManager _boardScript;
+	private BoardCreator _boardScript;
 	private List<Enemy> enemiesList;
 	private bool enemiesIsMoving;
     [HideInInspector]public bool isPlayerTurn = true;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
         enemiesList = new List<Enemy>();
-        _boardScript = GetComponent<BoardManager>();
+		_boardScript = GetComponent<BoardCreator>();
         InitGame();
 		gameIsOver = false;
 	}

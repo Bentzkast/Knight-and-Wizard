@@ -9,6 +9,7 @@ public class Destructable : MonoBehaviour, IDamageable {
 	public int armor;
 
 	public Animator graphicAnimator;
+	public GameObject slashSprite;
     
 	public Damage TakeDamage(Damage damage)
 	{
@@ -17,6 +18,8 @@ public class Destructable : MonoBehaviour, IDamageable {
 		if(damage.rawDamage > 0)
 		{
 			graphicAnimator.SetTrigger("GetHit");
+			GameObject slash_instance = Instantiate(slashSprite, gameObject.transform.position, Quaternion.identity);
+            Destroy(slash_instance, .1f);
 		}
         if(hp <= 0)
 		{

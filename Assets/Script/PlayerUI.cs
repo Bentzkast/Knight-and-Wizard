@@ -32,7 +32,9 @@ public class PlayerUI : MonoBehaviour {
 	void Update()
 	{
 		if(_stats != null){
-			move.text = "Move:" + _stats.movementValue.ToString() + "/" + _stats.maxMovement.ToString();
+			move.text = "";
+			if (_gameManager.isPlayerTurn)
+				move.text = "Move:" + _stats.movementValue.ToString() + "/" + _stats.maxMovement.ToString();
 			playerHp.text = "Health :" + _stats.hitPoints.ToString();
 			playerAttack.text = "Attack : " + _stats.GetAttackValue().ToString();
 			playerBlock.text = "Block : " + _stats.GetBlockValue().ToString();
