@@ -22,16 +22,26 @@ public class BoardCreator : MonoBehaviour {
 	public GameObject[] obstacleTiles;
 	public GameObject[] pickUp;
 	public GameObject[] enemy;
+	public GameObject[] bosses;
+   
 	public GameObject player;
 
-
+	private bool bossSpawned = false;
+	private bool enemySpawned = false;
 	private TileType[][] tiles;
 	private Room[] rooms;
 	private Corridor[] corridors;
 	private GameObject boardHolder;
+	private int level = 0;
 
-	public void SetupGameBoard()
+	public void SetupGameBoard(int level)
 	{
+		bossSpawned = true;
+		enemySpawned = false;
+		if(level == 5){
+			bossSpawned = false;
+		}
+		this.level = level;
 		boardHolder = new GameObject("BoardHolder");
 		SetupTilesArray();
 		CreateRoomsAndCorridors();
@@ -41,6 +51,7 @@ public class BoardCreator : MonoBehaviour {
 
         InstantiateTiles();
         InstantiateOuterWalls();
+
 	}
 
     void SetupTilesArray()
@@ -144,18 +155,27 @@ public class BoardCreator : MonoBehaviour {
 						InstantiateFromArray(topFloorTiles,i,j);
 					else
 					    InstantiateFromArray(floorTiles, i, j);
-					if(Random.Range(0f,1f) <= .02f)
-					{
-						InstantiateFromArray(obstacleTiles, i, j);
+					float random = Random.Range(0f, 1f);
+
+					if(!bossSpawned){
+            			InstantiateFromArray(bosses, i, j);
+            			bossSpawned = true;
 					}
-					else if (Random.Range(0f, 1f) <= .02f)
-                    {
+					else if(!enemySpawned){
 						InstantiateFromArray(enemy, i, j);
-                    }
-					else if (Random.Range(0f, 1f) <= .02f)
-                    {
-						InstantiateFromArray(pickUp, i, j);
-                    }
+						enemySpawned = true;
+					}
+					else
+					{
+						if (random <= .01f + (level) * .01f)
+                        {
+                            InstantiateFromArray(enemy, i, j);
+                        }
+                        else if (random <= .02f + level * .02f)
+                        {
+                            InstantiateFromArray(obstacleTiles, i, j);
+                        }
+					}               
 				}
 
 				else if (tiles[i][j] == TileType.Wall)

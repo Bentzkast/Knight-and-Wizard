@@ -6,14 +6,30 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats {
 
+	public class Slot {
+		public Sprite icon;
+		public int attackValue;
+		public int blockValue;
+		public int durability;
+
+		public Slot(Sprite icon, int a, int b, int d){
+			this.icon = icon;
+			attackValue = a;
+			blockValue = b;
+			durability = d;
+		}
+	}
+  
+
 	public int maxMovement = 2;
 	public int maxSlot = 2;
     public int movementValue = 2;
     public int hitPoints = 2;
 	public int defaultAttack = 1;
-	public Equipment weaponSlot = null;
-	public Equipment armorSlot = null;
-	public Equipment otherSlot = null;
+	public int defaultBlock = 0;
+	public Slot weaponSlot = null;
+	public Slot armorSlot = null;
+	public Slot otherSlot = null;
 
 
 	public int GetAttackValue(){
@@ -23,44 +39,28 @@ public class PlayerStats {
 	}
 
 	public int GetBlockValue(){
-		int block = 0;
+		int block = defaultBlock;
 		if (weaponSlot != null) block += weaponSlot.blockValue;
 		if (armorSlot != null) block += armorSlot.blockValue;
 		if (otherSlot != null) block += otherSlot.blockValue;
-		//if(block > 0)
-		//{
-		//	DealBlockDuraDamage(1);
-		//}
-
+        
 		return block;
 	}
 
+
 	public void DealBlockDuraDamage(int duradamage){
-		if(weaponSlot != null){
-			if(weaponSlot.blockValue > 0){
-				if (duradamage > weaponSlot.durabilty)
-				{
-					duradamage -= weaponSlot.durabilty;
-					weaponSlot.durabilty = 0;
-				}
-				else
-				{
-					weaponSlot.durabilty -= duradamage;
-				}
-			}
-		}
 		if (armorSlot != null)
         {
 			if (armorSlot.blockValue > 0)
             {
-				if (duradamage > armorSlot.durabilty)
+				if (duradamage > armorSlot.durability)
                 {
-					duradamage -= armorSlot.durabilty;
-					armorSlot.durabilty = 0;
+					duradamage -= armorSlot.durability;
+					armorSlot.durability = 0;
                 }
                 else
                 {
-					armorSlot.durabilty -= duradamage;
+					armorSlot.durability -= duradamage;
                 }
             }
         }
@@ -68,14 +68,14 @@ public class PlayerStats {
         {
 			if (otherSlot.blockValue > 0)
             {
-				if (duradamage > otherSlot.durabilty)
+				if (duradamage > otherSlot.durability)
                 {
-					duradamage -= otherSlot.durabilty;
-					otherSlot.durabilty = 0;
+					duradamage -= otherSlot.durability;
+					otherSlot.durability = 0;
                 }
                 else
                 {
-					otherSlot.durabilty -= duradamage;
+					otherSlot.durability -= duradamage;
                 }
             }
         }

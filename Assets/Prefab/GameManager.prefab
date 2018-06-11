@@ -56,22 +56,41 @@ MonoBehaviour:
   rows: 100
   numRooms:
     m_Min: 4
-    m_Max: 4
+    m_Max: 6
   roomWidth:
     m_Min: 4
-    m_Max: 4
+    m_Max: 7
   roomHeight:
     m_Min: 4
-    m_Max: 4
+    m_Max: 7
   corridorLength:
     m_Min: 4
-    m_Max: 4
+    m_Max: 7
   floorTiles:
   - {fileID: 1137893616467632, guid: f0866d3a96f1c42ba856e672feacf29f, type: 2}
   wallTiles:
   - {fileID: 1878395205284938, guid: 37b20f49eab3a4596a301431ebc1ac57, type: 2}
-  topWallTiles: []
-  player: {fileID: 0}
+  topWallTiles:
+  - {fileID: 1859049076890336, guid: 1d3b82bb74f3a46a38d03edcd2e870be, type: 2}
+  - {fileID: 1328131440344452, guid: d8fc4faeb3eba4160a6479cb1ad29b4f, type: 2}
+  - {fileID: 1697399557875462, guid: 1b23939ac345b496a93bca6b9f21745a, type: 2}
+  topFloorTiles:
+  - {fileID: 1372495786022240, guid: 5e330efe5641945eeb996e6b7f7dc7eb, type: 2}
+  - {fileID: 1854364330075398, guid: 19c024a07b89944d1a3cd16092050697, type: 2}
+  - {fileID: 1659894942386330, guid: af3f0ee8f2d7d4aeb9f3959d791eed2e, type: 2}
+  obstacleTiles:
+  - {fileID: 1923470810141416, guid: c915e1301a95f4f46b2d31ee7db00838, type: 2}
+  - {fileID: 1923470810141416, guid: 14ef3e49457c241a0b302032ce7d928d, type: 2}
+  - {fileID: 1923470810141416, guid: 75ba72341fd71496288b5196518f3cec, type: 2}
+  pickUp:
+  - {fileID: 1823937179354520, guid: 110d27689daa347c9bcfe72918cb4dbb, type: 2}
+  - {fileID: 1823937179354520, guid: 3c002d6ea14974390ab36bc5ad527e81, type: 2}
+  - {fileID: 1823937179354520, guid: 45a5d304b91ce46f29cbe6022343193b, type: 2}
+  - {fileID: 1823937179354520, guid: 6d012c05fa1364b979197e4d4d4d8055, type: 2}
+  enemy:
+  - {fileID: 1943851369727640, guid: 0788c70d4f8784f529c9363eaa492cf9, type: 2}
+  - {fileID: 1585664181214532, guid: 6b53613d51449439ebfdfdcc1d7f3cdf, type: 2}
+  player: {fileID: 1314850886592300, guid: d8771fd31844f4fce8e43ab45768e21b, type: 2}
 --- !u!114 &114491984538595026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,16 +102,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16186753ac50a4c9e938230f372d31eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelStartDelay: 0.1
-  turnDelay: 0.5
+  levelStartDelay: 2
+  exitLevelDelay: 2
+  turnDelay: 0.25
   playerStats:
-    maxMovement: 2
+    maxMovement: 3
     maxSlot: 2
-    movementValue: 2
+    movementValue: 3
     hitPoints: 10
     defaultAttack: 1
-    weaponSlot: {fileID: 0}
-    armorSlot: {fileID: 0}
-    otherSlot: {fileID: 0}
+    weaponSlot:
+      icon: {fileID: 0}
+      Eid: 1
+      blockValue: 0
+      attackValue: 0
+      durabilty: 0
+      tier: 0
+      heal: 0
+      equipmentType: 0
+      desc: 
+    armorSlot:
+      icon: {fileID: 0}
+      Eid: 1
+      blockValue: 0
+      attackValue: 0
+      durabilty: 0
+      tier: 0
+      heal: 0
+      equipmentType: 0
+      desc: 
+    otherSlot:
+      icon: {fileID: 0}
+      Eid: 1
+      blockValue: 0
+      attackValue: 0
+      durabilty: 0
+      tier: 0
+      heal: 0
+      equipmentType: 0
+      desc: 
   gameIsOver: 0
+  gameIsWon: 0
+  level: 0
+  doingSetup: 0
   isPlayerTurn: 1

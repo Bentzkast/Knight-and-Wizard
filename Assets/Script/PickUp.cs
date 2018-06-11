@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp : MonoBehaviour {
+public class PickUp : MonoBehaviour
+{
 
+	public SpriteRenderer spriteRenderer;
+	public Equipment _equipment;
 
-
-	public Equipment GetPickUpEquipment(){
-		return this.GetComponentInChildren<Equipment>();
+	public void Start()
+	{
+		spriteRenderer.sprite = _equipment.icon;
 	}
 }

@@ -203,6 +203,40 @@ MonoBehaviour:
   restartLvlDelay: 1
   defaultWeaponSprite: {fileID: 21300004, guid: 2513292b237c34abb9f0e5b6e8fe4263,
     type: 3}
+  popUpGO: {fileID: 1590547867930214, guid: 12427ffa30bc444dd8b7aa1489bc97bc, type: 2}
+  _playerStats:
+    maxMovement: 2
+    maxSlot: 2
+    movementValue: 2
+    hitPoints: 2
+    defaultAttack: 1
+    weaponSlot:
+      icon: {fileID: 0}
+      blockValue: 1
+      attackValue: 1
+      durabilty: 1
+      tier: 1
+      heal: 0
+      equipmentType: 0
+      desc: 
+    armorSlot:
+      icon: {fileID: 0}
+      blockValue: 1
+      attackValue: 1
+      durabilty: 1
+      tier: 1
+      heal: 0
+      equipmentType: 0
+      desc: 
+    otherSlot:
+      icon: {fileID: 0}
+      blockValue: 1
+      attackValue: 1
+      durabilty: 1
+      tier: 1
+      heal: 0
+      equipmentType: 0
+      desc: 
 --- !u!212 &212032748618234612
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -235,7 +269,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1042235613
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300004, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -279,7 +313,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1791517859
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

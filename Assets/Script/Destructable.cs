@@ -2,14 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destructable : MonoBehaviour, IDamageable {
+public class Destructable : MonoBehaviour, IDamageable
+{
 
 	public int attack;
-	public int hp; 
+	public int hp;
 	public int armor;
+
+	[System.Serializable]
+	public class Loot
+	{
+		public GameObject pick;
+		public int dropChancePercent; // intpercent
+	}
 
 	public Animator graphicAnimator;
 	public GameObject slashSprite;
+	public Loot[] loots;
+    
+	int PickRandomItem(){
+		int range = 0;
+		for (int i = 0; i < loots.Length; i++){
+			range += loots[i].dropChancePercent;
+		}
+		int rand = Random.Range(0, range);
+		int top = 0;
+
+		for (int i = 0; i < loots.Length;i++){
+			top += loots[i].dropChancePercent;
+			if(rand < top){
+				return i;
+			}
+		}
+        return -1;
+	}
     
 	public Damage TakeDamage(Damage damage)
 	{
@@ -23,6 +49,7 @@ public class Destructable : MonoBehaviour, IDamageable {
 		}
         if(hp <= 0)
 		{
+			GameObject popInst = Instantiate(loots[PickRandomItem()].pick, transform.position, Quaternion.identity) as GameObject;
 			gameObject.SetActive(false);
 		}
 

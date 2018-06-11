@@ -129,6 +129,17 @@ MonoBehaviour:
   hp: 3
   armor: 0
   graphicAnimator: {fileID: 95798605682612084}
+  slashSprite: {fileID: 1478817130071248, guid: 170cf85b208f1440d8909a0b9d151cd6,
+    type: 2}
+  loots:
+  - pick: {fileID: 1823937179354520, guid: 6d012c05fa1364b979197e4d4d4d8055, type: 2}
+    dropChancePercent: 30
+  - pick: {fileID: 1823937179354520, guid: 110d27689daa347c9bcfe72918cb4dbb, type: 2}
+    dropChancePercent: 20
+  - pick: {fileID: 1823937179354520, guid: 45a5d304b91ce46f29cbe6022343193b, type: 2}
+    dropChancePercent: 10
+  - pick: {fileID: 1823937179354520, guid: 3c002d6ea14974390ab36bc5ad527e81, type: 2}
+    dropChancePercent: 10
 --- !u!212 &212898019732077590
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -160,7 +171,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1791517859
+  m_SortingLayerID: 1991136953
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300068, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}

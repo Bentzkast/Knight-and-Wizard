@@ -10,6 +10,7 @@ TagManager:
   - Equipment
   - Consumable
   - GameManager
+  - UIManager
   layers:
   - Default
   - TransparentFX
@@ -50,11 +51,17 @@ TagManager:
   - name: Floor
     uniqueID: 879591029
     locked: 0
+  - name: TopWall
+    uniqueID: 1991136953
+    locked: 0
   - name: Character
     uniqueID: 2503449437
     locked: 0
   - name: Item
     uniqueID: 1042235613
+    locked: 0
+  - name: Wall
+    uniqueID: 989040607
     locked: 0
   - name: Effects
     uniqueID: 3058400843

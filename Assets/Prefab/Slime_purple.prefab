@@ -250,7 +250,7 @@ MonoBehaviour:
     m_Bits: 256
   hp: 5
   attack: 1
-  armor: 1
+  armor: 0
   enemyChildObject: {fileID: 1291478689723672}
   slashSprite: {fileID: 1478817130071248, guid: 170cf85b208f1440d8909a0b9d151cd6,
     type: 2}
@@ -324,7 +324,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1791517859
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300008, guid: 2513292b237c34abb9f0e5b6e8fe4263, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

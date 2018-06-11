@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: EvilTree
+  m_Controller: {fileID: 9100000, guid: 206a0d02c1f464a2a99849058afc227a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 82515ccb3dbbb45ea814faf5561a4de0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ca7b510017d6c455b85aa3ba0d7ad39a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2368445e298c8493788c2bd6cdb52c5a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1a706f994ac9f45b99efed2601c93992, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fd77726b0c28248f0a03b364e9e0cd4e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0525d580576bf4c6e90929ab85c58ce4, type: 2}

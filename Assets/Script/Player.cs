@@ -9,33 +9,44 @@ public class Player : Moving_Object,IDamageable {
 	public GameObject weaponSlot;
 	public float restartLvlDelay = 1f;
 	public Sprite defaultWeaponSprite;
+	public GameObject popUpGO;
 
 	private Animator _weaponAnimator;
 	private PlayerStats _playerStats;
 	private SpriteRenderer _weaponSpriteRenderer;
 	private bool m_isAxisInUse = false;
 
-       
-	protected override void Start()
+
+	private void Awake()
 	{
 		_weaponAnimator = weaponSlot.GetComponent<Animator>();
         _weaponSpriteRenderer = weaponSlot.GetComponent<SpriteRenderer>();
         _playerStats = GameManager.instanceGM.playerStats;
+        _playerStats.movementValue = _playerStats.maxMovement;
+	}
+
+	protected override void Start()
+	{
+
 		base.Start();
 	}
 
-	private void OnDisable()
-	{
-        GameManager.instanceGM.playerStats = _playerStats;
-	}
+	//private void OnDisable()
+	//{
+ //       GameManager.instanceGM.playerStats = _playerStats;
+	//}
 
     private void CheckIfGameOver()
     {
         if(_playerStats.hitPoints <= 0)
         {
             Debug.Log("Game Over");
+            
+			GameManager.instanceGM.gameIsOver = true;
 			gameObject.SetActive(false);
+			GameManager.instanceGM.gameIsWon = false;
 			GameManager.instanceGM.GameOver();
+			enabled = false;
         }
     }
 
@@ -46,8 +57,9 @@ public class Player : Moving_Object,IDamageable {
 
 	public Damage TakeDamage(Damage damage)
     {
-        
 		int finalDamage = damage.rawDamage - _playerStats.GetBlockValue();
+		Debug.Log("Damage : " + finalDamage + "dura : "+ damage.duraDamage);
+		_playerStats.DealBlockDuraDamage(damage.duraDamage);
 		if(finalDamage > 0)
 		{
 			_playerStats.hitPoints -= finalDamage;
@@ -56,7 +68,7 @@ public class Player : Moving_Object,IDamageable {
 		}      
 		return null;
     }
-
+    
 	private void OnTriggerEnter2D(Collider2D other)
 	{
         if(other.tag == "exit"){
@@ -65,17 +77,36 @@ public class Player : Moving_Object,IDamageable {
         }
         else if(other.tag == "Equipment"){
             Debug.Log("Picked up Equipment");
-			Equipment equipment = other.GetComponent<PickUp>().GetPickUpEquipment();
-			if (equipment.equipmentType == Equipment.Type.Weapon){
-				_playerStats.weaponSlot = equipment;
+
+			Equipment equipment = other.GetComponent<PickUp>()._equipment;
+			if (equipment.equipmentType == Equipment.Type.Weapon)
+			{
+				PlayerStats.Slot slot = new PlayerStats.Slot(equipment.icon,equipment.attackValue,equipment.blockValue,equipment.durabilty); 
+				_playerStats.weaponSlot = slot;
 				_weaponSpriteRenderer.sprite = equipment.icon;
 			}
-				
-			else if (equipment.equipmentType == Equipment.Type.Armor)
-				_playerStats.armorSlot = equipment;
-			else if (equipment.equipmentType == Equipment.Type.Other)
-				_playerStats.otherSlot = equipment;
             
+			else if (equipment.equipmentType == Equipment.Type.Armor)
+			{
+				PlayerStats.Slot slot = new PlayerStats.Slot(equipment.icon,equipment.attackValue,equipment.blockValue,equipment.durabilty); 
+				_playerStats.armorSlot = slot;
+			}
+				
+			else if (equipment.equipmentType == Equipment.Type.Other){
+				PlayerStats.Slot slot = new PlayerStats.Slot(equipment.icon, equipment.attackValue, equipment.blockValue, equipment.durabilty);
+				_playerStats.otherSlot = slot;
+			}
+			else if (equipment.equipmentType == Equipment.Type.Consumable){
+				Debug.Log(equipment.heal);
+				_playerStats.defaultAttack += equipment.attackValue;
+				_playerStats.defaultBlock += equipment.blockValue;
+				_playerStats.hitPoints += equipment.heal;
+			}
+			GameObject popInst = Instantiate(popUpGO, transform.position, Quaternion.identity, transform);
+			popInst.GetComponent<Pop>().SetText(equipment.desc);
+            Destroy(popInst, 1f);
+
+
 			other.gameObject.SetActive(false);
             
         }
@@ -85,13 +116,13 @@ public class Player : Moving_Object,IDamageable {
 	protected override void OnCantMove<T>(T component)
 	{
 		IDamageable hitEnemy = component as IDamageable;
-
+        
 		//Debug.Log(hitEnemy.gameObject.name);
         // ensure combat
 
-		Damage counter = hitEnemy.TakeDamage(new Damage(_playerStats.weaponSlot ? _playerStats.weaponSlot.attackValue : _playerStats.defaultAttack,0));
+		Damage counter = hitEnemy.TakeDamage(new Damage(_playerStats.GetAttackValue(),0));
 		if(_playerStats.weaponSlot != null)
-		    _playerStats.weaponSlot.durabilty -= counter.duraDamage;
+		    _playerStats.weaponSlot.durability -= counter.duraDamage;
 
 
         knightAnimator.SetTrigger("Knight_attack");
@@ -107,15 +138,30 @@ public class Player : Moving_Object,IDamageable {
             GameManager.instanceGM.isPlayerTurn = false;
 			_playerStats.movementValue = _playerStats.maxMovement;
         }
-
+        
 	}
 
 	private void Update()
 	{
-		if(_playerStats.weaponSlot != null && _playerStats.weaponSlot.durabilty == 0){
-			_weaponSpriteRenderer.sprite = defaultWeaponSprite;
-			_playerStats.weaponSlot = null;
+		if(_playerStats != null){
+			if(_playerStats.weaponSlot != null){
+				_weaponSpriteRenderer.sprite = _playerStats.weaponSlot.icon;
+			}
+			if (_playerStats.weaponSlot != null && _playerStats.weaponSlot.durability <= 0)
+            {
+                _weaponSpriteRenderer.sprite = defaultWeaponSprite;
+                _playerStats.weaponSlot = null;
+            }
+			if (_playerStats.armorSlot != null && _playerStats.armorSlot.durability <= 0)
+			{
+				_playerStats.armorSlot = null;
+			}
+			if (_playerStats.otherSlot != null && _playerStats.otherSlot.durability <= 0)
+            {
+				_playerStats.otherSlot = null;
+			}
 		}
+      
         if (!GameManager.instanceGM.isPlayerTurn) return;
         if (isMoving) return;
 

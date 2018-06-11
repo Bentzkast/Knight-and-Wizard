@@ -7,6 +7,7 @@ public class Enemy : Moving_Object, IDamageable {
 
     public int hp = 3;
 	public int attack = 1;
+	public int counter = 1;
 	public int armor = 1;
 	public GameObject enemyChildObject;
 	public GameObject slashSprite;
@@ -45,7 +46,7 @@ public class Enemy : Moving_Object, IDamageable {
             GameManager.instanceGM.RemoveEnemyFromList(this);
         }
 
-		return new Damage(attack, armor);
+		return new Damage(counter, armor);
     }
 
     public void MoveEnemy(){
@@ -57,16 +58,16 @@ public class Enemy : Moving_Object, IDamageable {
             yDir = _target.position.y > transform.position.y ? 1 : -1;
         AttemptMove<Player>(xDir, yDir);
     }
-
+    
 	protected override void OnCantMove<T>(T component)
 	{
         Player hit_player = component as Player;
-		hit_player.TakeDamage(new Damage(attack,0));
+		hit_player.TakeDamage(new Damage(attack,1));
         _animator.SetTrigger("Enemy_attack");
 	}
 
 	private void Update()
 	{
-		status.text = "Hp:" + hp + "Attack:" + attack + "Armor:" + armor;
+		status.text = "Hp: " + hp + "\nAtk: " + attack + "\nCounter:" + counter + "\nArmor:" + armor;
 	}
 }
